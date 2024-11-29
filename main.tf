@@ -130,3 +130,9 @@ resource "tfe_variable" "hcp_tf_provider_name" {
   category        = "env"
   variable_set_id = tfe_variable_set.wip_variable_set.id
 }
+
+# share the variable set with another HCP Terraform Workspace
+resource "tfe_workspace_variable_set" "wip_workspace_variable_set" {
+  variable_set_id = tfe_variable_set.wip_variable_set.id
+  workspace_id    = "ws-brS5FKfw1L5RF1dq"
+}
