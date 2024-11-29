@@ -102,7 +102,7 @@ resource "tfe_variable_set" "wip_variable_set" {
 # }
 
 resource "tfe_variable" "hcp_tf_provider_auth" {
-  key             = "HCP_TF_GCP_PROVIDER_AUTH"
+  key             = "TFC_GCP_PROVIDER_AUTH"
   value           = "true"
   category        = "env"
   variable_set_id = tfe_variable_set.wip_variable_set.id
@@ -110,7 +110,7 @@ resource "tfe_variable" "hcp_tf_provider_auth" {
  
 resource "tfe_variable" "hcp_tf_service_account_email" {
   sensitive       = true
-  key             = "HCP_TF_GCP_RUN_SERVICE_ACCOUNT_EMAIL"
+  key             = "TFC_GCP_RUN_SERVICE_ACCOUNT_EMAIL"
   value           = google_service_account.hcp_tf.email
   category        = "env"
   variable_set_id = tfe_variable_set.wip_variable_set.id
@@ -118,7 +118,7 @@ resource "tfe_variable" "hcp_tf_service_account_email" {
  
 resource "tfe_variable" "hcp_tf_provider_name" {
   sensitive       = true
-  key             = "HCP_TF_GCP_WORKLOAD_PROVIDER_NAME"
+  key             = "TFC_GCP_WORKLOAD_PROVIDER_NAME"
   value           = google_iam_workload_identity_pool_provider.hcp_tf.name
   category        = "env"
   variable_set_id = tfe_variable_set.wip_variable_set.id
