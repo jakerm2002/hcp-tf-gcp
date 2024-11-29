@@ -87,13 +87,6 @@ resource "google_service_account_iam_member" "hcp_workload_identity_user" {
   role               = "roles/iam.workloadIdentityUser"
   member             = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.hcp_tf.name}/attribute.terraform_workspace_id/ws-brS5FKfw1L5RF1dq"
 }
- 
-# # grant 'example' service account permissions to create a bucket
-# resource "google_project_iam_member" "example_storage_admin" {
-#   member  = "serviceAccount:${google_service_account.example.email}"
-#   role    = "roles/storage.admin"
-#   project = local.google_project_id
-# }
 
 # create a variable set to store the workload identity federation config for the 'example' service account
 resource "tfe_variable_set" "wip_variable_set" {
@@ -135,4 +128,11 @@ resource "tfe_variable" "hcp_tf_provider_name" {
 resource "tfe_workspace_variable_set" "wip_workspace_variable_set" {
   variable_set_id = tfe_variable_set.wip_variable_set.id
   workspace_id    = "ws-brS5FKfw1L5RF1dq"
+}
+
+# grant 'example' service account permissions to create a bucket
+resource "google_project_iam_member" "test_storage_admin" {
+  member  = "serviceAccount:${google_service_account.hcp_tf.email}"
+  role    = "roles/storage.admin"
+  project = data.google_project.project.id
 }
