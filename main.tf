@@ -72,7 +72,7 @@ resource "google_service_account" "hcp_tf" {
 resource "google_service_account_iam_member" "hcp_workload_identity_user" {
   service_account_id = google_service_account.hcp_tf.name
   role               = "roles/iam.workloadIdentityUser"
-  member             = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.hcp_tf.name}/attribute.terraform_workspace_id/ws-ZZZZZZZZZZZZZZZ"
+  member             = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.hcp_tf.name}/attribute.terraform_workspace_id/ws-brS5FKfw1L5RF1dq"
 }
  
 # # grant 'example' service account permissions to create a bucket
