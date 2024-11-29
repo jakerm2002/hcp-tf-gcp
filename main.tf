@@ -60,3 +60,24 @@ resource "google_iam_workload_identity_pool_provider" "hcp_tf" {
     issuer_uri = "https://app.terraform.io"
   }
 }
+
+# example service account that HCP Terraform will impersonate
+resource "google_service_account" "hcp_tf" {
+  account_id   = "hcp-tf"
+  display_name = "Service Account for HCP Terraform Dynamic Credentials"
+  # project      = data.google_project.project.id
+}
+ 
+# IAM verifies the HCP Terraform Workspace ID before authorizing access to impersonate the 'example' service account
+resource "google_service_account_iam_member" "hcp_workload_identity_user" {
+  service_account_id = google_service_account.hcp_tf.name
+  role               = "roles/iam.workloadIdentityUser"
+  member             = "principalSet://iam.googleapis.com/${google_iam_workload_identity_pool.hcp_tf.name}/attribute.terraform_workspace_id/ws-ZZZZZZZZZZZZZZZ"
+}
+ 
+# # grant 'example' service account permissions to create a bucket
+# resource "google_project_iam_member" "example_storage_admin" {
+#   member  = "serviceAccount:${google_service_account.example.email}"
+#   role    = "roles/storage.admin"
+#   project = local.google_project_id
+# }
