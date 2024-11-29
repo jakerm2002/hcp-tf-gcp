@@ -1,4 +1,11 @@
 terraform {
+  cloud {
+    organization = "mdna"
+    workspaces {
+      name = "hcp-tf-gcp"
+    }
+  }
+
   required_providers {
     tfe = {
       source = "hashicorp/tfe"
