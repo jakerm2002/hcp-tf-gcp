@@ -137,9 +137,14 @@ resource "tfe_workspace_variable_set" "wip_workspace_variable_set" {
   workspace_id    = "ws-brS5FKfw1L5RF1dq"
 }
 
-# grant 'example' service account permissions to create a bucket
-resource "google_project_iam_member" "test_storage_admin" {
+resource "google_project_iam_member" "wip_admin" {
   member  = "serviceAccount:${google_service_account.hcp_tf.email}"
-  role    = "roles/storage.admin"
+  role    = "roles/iam.workloadIdentityPoolAdmin"
+  project = data.google_project.project.id
+}
+
+resource "google_project_iam_member" "owner" {
+  member  = "serviceAccount:${google_service_account.hcp_tf.email}"
+  role    = "roles/owner"
   project = data.google_project.project.id
 }
