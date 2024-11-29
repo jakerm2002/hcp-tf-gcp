@@ -105,7 +105,7 @@ resource "tfe_variable" "hcp_tf_provider_auth" {
 resource "tfe_variable" "hcp_tf_service_account_email" {
   sensitive       = true
   key             = "HCP_TF_GCP_RUN_SERVICE_ACCOUNT_EMAIL"
-  value           = google_service_account.example.email
+  value           = google_service_account.hcp_tf.email
   category        = "env"
   variable_set_id = tfe_variable_set.wip_variable_set.id
 }
